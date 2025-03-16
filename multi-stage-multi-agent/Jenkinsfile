@@ -3,18 +3,26 @@ pipeline {
   stages {
     stage('Back-end') {
       agent {
-        docker { image 'maven:3.8.1-adoptopenjdk-11' }
+        docker {
+          image 'maven:3.8.1-adoptopenjdk-11'
+          args '-d' // Run container in detached mode
+        }
       }
       steps {
         sh 'mvn --version'
+        sh 'docker ps' // Check running containers
       }
     }
     stage('Front-end') {
       agent {
-        docker { image 'node:16-alpine' }
+        docker {
+          image 'node:16-alpine'
+          args '-d' // Run container in detached mode
+        }
       }
       steps {
         sh 'node --version'
+        sh 'docker ps' // Check running containers
       }
     }
   }
